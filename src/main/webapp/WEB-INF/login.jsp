@@ -13,9 +13,9 @@
     <form action="Login">
       <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
       <label for="username" class="visually-hidden">Username</label>
-      <input type="text" id="username" class="form-control" placeholder="Email address" required autofocus>
+      <input type="text" id="username" name="username" class="form-control" placeholder="Email address" required autofocus>
       <label for="password" class="visually-hidden">Password</label>
-      <input type="password" id="password" class="form-control" placeholder="Password" required>
+      <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
       <button class="w-100 btn btn-lg btn-primary button-login" type="submit">Sign in</button>
     </form>
   </main>

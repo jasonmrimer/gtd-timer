@@ -8,6 +8,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <body>
-  <div>Welcome <%=request.getAttribute("user")%></div>
+  <div>Welcome <%=request.getAttribute("username")%></div>
 </body>
 </html>
