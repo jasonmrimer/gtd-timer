@@ -9,39 +9,46 @@
 <%
   String error = request.getParameter("error");
 %>
+<link
+  rel="stylesheet"
+  href="../style.css"
+>
 <html>
+<jsp:include page="../header.jsp"/>
 <body>
-<div id="formContent">
-  <main class="form-login">
-    <form action="Login">
-      <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
-      <label for="username" class="visually-hidden">Username</label>
-      <input type="text" id="username" name="username" class="form-control" placeholder="Email address" required autofocus>
-      <label for="password" class="visually-hidden">Password</label>
-      <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
-      <% if (!error.isEmpty()) {%>
-      <span class="error text-danger">*<%=error%>...</span>
-      <%}%>
-      <button class="w-100 btn btn-lg btn-primary button-login" type="submit">Sign in</button>
-    </form>
-  </main>
+<div class="body-login">
+  <div id="formContent">
+    <main class="form-login">
+      <form action="Login">
+        <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+        <label for="username" class="visually-hidden">Username</label>
+        <input type="text" id="username" name="username" class="form-control" placeholder="Email address" required
+          autofocus>
+        <label for="password" class="visually-hidden">Password</label>
+        <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
+        <% if (!error.isEmpty()) {%>
+        <span class="error text-danger">*<%=error%>...</span>
+        <%}%>
+        <button class="w-100 btn btn-lg btn-primary button-login" type="submit">Sign in</button>
+      </form>
+    </main>
+  </div>
 </div>
 </body>
 </html>
 <style>
-    html,
-    body {
-        height: 100%;
-    }
+    /*html,*/
+    /*body {*/
+    /*    height: 100%;*/
+    /*}*/
 
-    body {
-        display: flex;
-        flex-direction: row;
-        align-items: flex-start;
-        justify-content: center;
-        padding-top: 32px;
-        background-color: #fafafa;
-    }
+    /*body {*/
+    /*    display: flex;*/
+    /*    flex-direction: row;*/
+    /*    align-items: flex-start;*/
+    /*    justify-content: center;*/
+    /*    background-color: #fafafa;*/
+    /*}*/
 
     .form-login {
         width: 100%;
