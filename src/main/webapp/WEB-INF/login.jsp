@@ -20,7 +20,7 @@
       <label for="password" class="visually-hidden">Password</label>
       <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
       <% if (!error.isEmpty()) {%>
-      <span class="error text-danger"><%=error%></span>
+      <span class="error text-danger">*<%=error%>...</span>
       <%}%>
       <button class="w-100 btn btn-lg btn-primary button-login" type="submit">Sign in</button>
     </form>
