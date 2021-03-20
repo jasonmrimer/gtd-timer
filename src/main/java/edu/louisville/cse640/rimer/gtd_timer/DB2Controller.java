@@ -38,10 +38,9 @@ public class DB2Controller {
       sqlException.printStackTrace();
     }
     Statement statement = connection.createStatement();
-    System.out.println("==========checking for user: " + username);
     String query = "SELECT * FROM user WHERE username='" + username + "'";
     ResultSet resultSet = statement.executeQuery(query);
-    User user = new User("no user found");
+    User user = null;
     while (resultSet.next()) {
       System.out.println(resultSet);
       System.out.println(resultSet.getString("username"));

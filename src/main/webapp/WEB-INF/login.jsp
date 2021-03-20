@@ -6,6 +6,9 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+  String error = request.getParameter("error");
+%>
 <html>
 <body>
 <div id="formContent">
@@ -16,6 +19,9 @@
       <input type="text" id="username" name="username" class="form-control" placeholder="Email address" required autofocus>
       <label for="password" class="visually-hidden">Password</label>
       <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
+      <% if (!error.isEmpty()) {%>
+      <span class="error text-danger"><%=error%></span>
+      <%}%>
       <button class="w-100 btn btn-lg btn-primary button-login" type="submit">Sign in</button>
     </form>
   </main>

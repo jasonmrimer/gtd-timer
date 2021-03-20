@@ -11,5 +11,12 @@
   <title>GTD Timer</title>
 </head>
 <body>
-<jsp:include page="WEB-INF/login.jsp"/>
+<%
+  String error = request.getAttribute("error") != null
+    ? request.getAttribute("error").toString()
+    : "";
+%>
+<jsp:include page="WEB-INF/login.jsp">
+  <jsp:param name="error" value="<%=error%>"/>
+</jsp:include>
 </body>

@@ -14,15 +14,19 @@ public class Login extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     String username = req.getParameter("username");
-    req.setAttribute("username", "not implemented");
-    User user = new User("before db connection");
     try {
-      user = new DB2Controller().fetchUser(username);
+      User user = new DB2Controller().fetchUser(username);
+      RequestDispatcher dispatcher;
+      if (user != null) {
+        req.setAttribute("username", user.username);
+        dispatcher = req.getRequestDispatcher("/WEB-INF/home.jsp");
+      } else {
+        req.setAttribute("error", "User not found");
+        dispatcher = req.getRequestDispatcher("index.jsp");
+      }
+      dispatcher.forward(req, resp);
     } catch (SQLException sqlException) {
       sqlException.printStackTrace();
     }
-    req.setAttribute("username", user.username);
-    RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/home.jsp");
-    dispatcher.forward(req, resp);
   }
 }
