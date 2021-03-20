@@ -28,6 +28,7 @@
 </html>
 <style type="text/css">
   .banner {
+      width: 100%;
       display: flex;
       flex-direction: row;
       justify-content: flex-start;
@@ -35,6 +36,7 @@
       background: #6200EE;
       padding: 16px;
   }
+
   h6  {
       color: #FEFEFE;
       background: none;

@@ -9,14 +9,10 @@
 <%
   String error = request.getParameter("error");
 %>
-<link
-  rel="stylesheet"
-  href="../style.css"
->
 <html>
 <jsp:include page="../header.jsp"/>
 <body>
-<div class="body-login">
+<div class="body-login card">
   <div id="formContent">
     <main class="form-login">
       <form action="Login">
@@ -29,7 +25,7 @@
         <% if (!error.isEmpty()) {%>
         <span class="error text-danger">*<%=error%>...</span>
         <%}%>
-        <button class="w-100 btn btn-lg btn-primary button-login" type="submit">Sign in</button>
+        <button class="w-100 btn btn-lg button-primary" type="submit">Sign in</button>
       </form>
     </main>
   </div>
@@ -37,18 +33,14 @@
 </body>
 </html>
 <style>
-    /*html,*/
-    /*body {*/
-    /*    height: 100%;*/
-    /*}*/
-
-    /*body {*/
-    /*    display: flex;*/
-    /*    flex-direction: row;*/
-    /*    align-items: flex-start;*/
-    /*    justify-content: center;*/
-    /*    background-color: #fafafa;*/
-    /*}*/
+    .body-login {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        margin-top: 16px;
+        max-width: 330px;
+    }
 
     .form-login {
         width: 100%;
@@ -72,7 +64,7 @@
         border-bottom-left-radius: 0;
     }
 
-    .button-login {
+    .button-primary {
         margin-top: 8px;
     }
 </style>
