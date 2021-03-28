@@ -17,5 +17,8 @@
 <h2><%=request.getAttribute("username")%></h2>
 <div>Welcome, more features to come...</div>
 <button onclick="printHw()">Test</button>
+<script>
+  document.addEventListener("keydown", handleEvent);
+</script>
 </body>
 </html>
