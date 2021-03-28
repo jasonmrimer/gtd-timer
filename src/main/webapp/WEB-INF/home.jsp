@@ -10,10 +10,12 @@
   rel="stylesheet"
   href="../style.css"
 >
+<script src="../test.ts"></script>
 <html>
 <jsp:include page="../header.jsp"/>
 <body>
 <h2><%=request.getAttribute("username")%></h2>
 <div>Welcome, more features to come...</div>
+<button onclick="printHw()">Test</button>
 </body>
 </html>
