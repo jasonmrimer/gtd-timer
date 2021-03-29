@@ -18,7 +18,54 @@ public class DB2Controller {
     url = "jdbc:db2://db2.cecsresearch.org:50000/COMPANY";
   }
 
+  public String startTimer(String userId) throws SQLException {
+    connectToDatabase();
+    Statement statement = connection.createStatement();
+
+    String query = "select * from final table" +
+      "(insert into EVENT " +
+      "(USER_ID, START) " +
+      "values (" + userId + ", current_timestamp ))";
+    ResultSet resultSet = statement.executeQuery(query);
+
+    String eventId = "";
+    while (resultSet.next()) {
+      eventId = resultSet.getString("id");
+    }
+    return eventId;
+  }
+
+  public void endTimer(String eventId) throws SQLException {
+    connectToDatabase();
+    Statement statement = connection.createStatement();
+
+    String query = "update event " +
+      "set END = current_timestamp " +
+      "where id = " + eventId;
+    statement.execute(query);
+  }
+
   public User fetchUser(String username, String password) throws SQLException {
+    connectToDatabase();
+    Statement statement = connection.createStatement();
+    String query = "SELECT * FROM user " +
+      "WHERE username='" + username + "' " +
+      "AND password='" + password + "'";
+    ResultSet resultSet = statement.executeQuery(query);
+    User user = null;
+    while (resultSet.next()) {
+      System.out.println(resultSet.getString("username"));
+      System.out.println(resultSet.getString("id"));
+      user = new User(
+        Integer.parseInt(resultSet.getString("id")),
+        resultSet.getString("username")
+      );
+    }
+    disconnectFromDatabase();
+    return user;
+  }
+
+  private void connectToDatabase() {
     initializeVariables();
     try {
       Class.forName(driver);
@@ -32,19 +79,6 @@ public class DB2Controller {
       System.err.println(sqlException.getMessage());
       sqlException.printStackTrace();
     }
-    Statement statement = connection.createStatement();
-    String query = "SELECT * FROM user " +
-      "WHERE username='" + username + "' " +
-      "AND password='" + password + "'";
-    ResultSet resultSet = statement.executeQuery(query);
-    User user = null;
-    while (resultSet.next()) {
-      System.out.println(resultSet);
-      System.out.println(resultSet.getString("username"));
-      user = new User(resultSet.getString("username"));
-    }
-    disconnectFromDatabase();
-    return user;
   }
 
   public void disconnectFromDatabase() {
