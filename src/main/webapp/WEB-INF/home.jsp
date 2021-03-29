@@ -13,7 +13,12 @@
 <html>
 <jsp:include page="../header.jsp"/>
 <body>
-<h2><%=request.getAttribute("username")%></h2>
+<h2><%=request.getAttribute("username")%>
+</h2>
 <div>Welcome, more features to come...</div>
+<form action="Timer">
+  <input type="hidden" name="username" value=<%=request.getParameter("username")%>/>
+  <input type="submit" value="Start"/>
+</form>
 </body>
 </html>
