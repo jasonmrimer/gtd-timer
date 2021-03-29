@@ -1,6 +1,7 @@
 package edu.louisville.cse640.rimer.gtd_timer;
 
 import java.sql.*;
+import java.time.LocalDate;
 
 public class DB2Controller {
   public String dbName = null;
@@ -18,20 +19,19 @@ public class DB2Controller {
     url = "jdbc:db2://db2.cecsresearch.org:50000/COMPANY";
   }
 
+  public void postTimer(String username, LocalDate startTime) throws SQLException {
+    connectToDatabase();
+    Statement statement = connection.createStatement();
+    String query = "select id from final table " +
+      "(insert into timer " +
+      "(username, start) " +
+      "values (" + username + ", " + startTime +"))";
+    ResultSet resultSet = statement.executeQuery(query);
+
+  }
+
   public User fetchUser(String username, String password) throws SQLException {
-    initializeVariables();
-    try {
-      Class.forName(driver);
-    } catch (ClassNotFoundException e) {
-      e.printStackTrace();
-    }
-    try {
-      connection = DriverManager.getConnection(url, userId, dbPassword);
-    } catch (SQLException sqlException) {
-      System.err.println("Error with database connection");
-      System.err.println(sqlException.getMessage());
-      sqlException.printStackTrace();
-    }
+    connectToDatabase();
     Statement statement = connection.createStatement();
     String query = "SELECT * FROM user " +
       "WHERE username='" + username + "' " +
@@ -45,6 +45,22 @@ public class DB2Controller {
     }
     disconnectFromDatabase();
     return user;
+  }
+
+  private void connectToDatabase() {
+    initializeVariables();
+    try {
+      Class.forName(driver);
+    } catch (ClassNotFoundException e) {
+      e.printStackTrace();
+    }
+    try {
+      connection = DriverManager.getConnection(url, userId, dbPassword);
+    } catch (SQLException sqlException) {
+      System.err.println("Error with database connection");
+      System.err.println(sqlException.getMessage());
+      sqlException.printStackTrace();
+    }
   }
 
   public void disconnectFromDatabase() {
