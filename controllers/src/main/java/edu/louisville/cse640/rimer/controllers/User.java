@@ -1,13 +1,15 @@
 package edu.louisville.cse640.rimer.controllers;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
+@Data
 public class User {
   int id;
   String username;
+  int timerId;
+  int timerValue;
 }

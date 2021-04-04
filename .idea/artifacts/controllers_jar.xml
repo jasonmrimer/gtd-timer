@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
   <artifact type="jar" name="controllers:jar">
-    <output-path>$PROJECT_DIR$/out/artifacts/controllers_jar</output-path>
+    <output-path>/usr/local/tomcat/lib</output-path>
     <root id="archive" name="controllers.jar">
       <element id="module-output" name="controllers" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.18/lombok-1.18.18.jar" path-in-jar="/" />
