@@ -17,8 +17,8 @@
 </h2>
 <div>Welcome, more features to come...</div>
 <form action="Timer">
-  <input type="hidden" name="username" value=<%=request.getParameter("username")%>/>
-  <input type="submit" value="Start"/>
+  <input type="hidden" name="userId" value=<%=request.getAttribute("userId")%>>
+  <input type="submit" value="Start">
 </form>
 </body>
 </html>

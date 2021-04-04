@@ -19,6 +19,7 @@ public class Login extends HttpServlet {
       User user = new DB2Controller().fetchUser(username, password);
       RequestDispatcher dispatcher;
       if (user != null) {
+        req.setAttribute("userId", user.id);
         req.setAttribute("username", user.username);
         dispatcher = req.getRequestDispatcher("/WEB-INF/home.jsp");
       } else {

@@ -1,7 +1,7 @@
 package edu.louisville.cse640.rimer.gtd_timer;
 
 import java.sql.*;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class DB2Controller {
   public String dbName = null;
@@ -19,15 +19,22 @@ public class DB2Controller {
     url = "jdbc:db2://db2.cecsresearch.org:50000/COMPANY";
   }
 
-  public void postTimer(String username, LocalDate startTime) throws SQLException {
+  public String postTimer(String userId, LocalDateTime startTime) throws SQLException {
     connectToDatabase();
     Statement statement = connection.createStatement();
-    String query = "select id from final table " +
-      "(insert into timer " +
-      "(username, start) " +
-      "values (" + username + ", " + startTime +"))";
+    Timestamp timestamp = Timestamp.valueOf(startTime);
+    int userIdInt = Integer.parseInt(userId);
+    System.out.println(timestamp);
+    String query = "select id from final table" +
+      "(insert into EVENT " +
+      "(USER_ID, START) " +
+      "values (" + userId + ", current_timestamp ))";
     ResultSet resultSet = statement.executeQuery(query);
-
+    String eventId = "";
+    while (resultSet.next()) {
+      eventId = resultSet.getString("id");
+    }
+    return eventId;
   }
 
   public User fetchUser(String username, String password) throws SQLException {
@@ -39,9 +46,12 @@ public class DB2Controller {
     ResultSet resultSet = statement.executeQuery(query);
     User user = null;
     while (resultSet.next()) {
-      System.out.println(resultSet);
       System.out.println(resultSet.getString("username"));
-      user = new User(resultSet.getString("username"));
+      System.out.println(resultSet.getString("id"));
+      user = new User(
+        Integer.parseInt(resultSet.getString("id")),
+        resultSet.getString("username")
+      );
     }
     disconnectFromDatabase();
     return user;
