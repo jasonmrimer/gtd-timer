@@ -16,6 +16,9 @@
         <element id="directory" name="lib">
           <element id="library" level="project" name="Maven: org.projectlombok:lombok:1.18.18" />
           <element id="library" level="project" name="Maven: com.ibm.db2.jcc:db2jcc:db2jcc4" />
+          <element id="archive" name="controllers-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="controllers" />
+          </element>
         </element>
       </element>
       <element id="directory" name="META-INF">
