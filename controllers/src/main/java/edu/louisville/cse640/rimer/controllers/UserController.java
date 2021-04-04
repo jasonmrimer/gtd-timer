@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class UserController {
-  private Connection connection = null;
+  private Connection connection;
 
   public UserController(Connection connection) {
     this.connection = connection;
@@ -18,16 +18,33 @@ public class UserController {
       "WHERE username='" + username + "' " +
       "AND password='" + password + "'";
 
+
     try {
       Statement statement = connection.createStatement();
       ResultSet resultSet = statement.executeQuery(query);
 
       while (resultSet.next()) {
+        String userId = resultSet.getString("id");
         user = new User(
-          Integer.parseInt(resultSet.getString("id")),
-          resultSet.getString("username")
+          Integer.parseInt(userId),
+          resultSet.getString("username"),
+          -1,
+          -1
         );
+
+        Statement statementForTimer = connection.createStatement();
+
+        query = "select * " +
+          "from TIMER " +
+          "where USER_ID = " + userId;
+        ResultSet resultSetForTimer = statementForTimer.executeQuery(query);
+
+        while (resultSetForTimer.next()) {
+          user.setTimerId(Integer.parseInt(resultSetForTimer.getString("id")));
+          user.setTimerValue(Integer.parseInt(resultSetForTimer.getString("seconds")));
+        }
       }
+
     } catch (SQLException sqlException) {
       sqlException.printStackTrace();
     }

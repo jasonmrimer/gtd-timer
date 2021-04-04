@@ -18,6 +18,7 @@
     : request.getAttribute("eventId").toString();
   String userId = request.getAttribute("userId").toString();
   String username = request.getAttribute("username").toString();
+  String timer = request.getAttribute("timer").toString();
 %>
 <body>
 <% if (eventId.isEmpty()) {%>
@@ -35,5 +36,13 @@
   <input type="submit" value="Stop">
 </form>
 <%}%>
+<div class="card">
+  <form action="EditTimer">
+    <div><%=timer%></div>
+    <input type="hidden" name="userId" value=<%=userId%>>
+    <input type="hidden" name="username" value=<%=username%>>
+    <input type="submit" value="Edit">
+  </form>
+</div>
 </body>
 </html>
