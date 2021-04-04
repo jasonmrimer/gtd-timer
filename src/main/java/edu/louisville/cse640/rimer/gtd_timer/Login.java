@@ -21,7 +21,7 @@ public class Login extends HttpServlet {
       if (user != null) {
         req.setAttribute("userId", user.id);
         req.setAttribute("username", user.username);
-        dispatcher = req.getRequestDispatcher("/WEB-INF/home.jsp");
+        dispatcher = req.getRequestDispatcher("/WEB-INF/timer.jsp");
       } else {
         req.setAttribute("error", "Username or password incorrect");
         dispatcher = req.getRequestDispatcher("index.jsp");
