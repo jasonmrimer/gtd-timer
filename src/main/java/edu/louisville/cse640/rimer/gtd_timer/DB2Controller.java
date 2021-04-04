@@ -45,26 +45,6 @@ public class DB2Controller {
     statement.execute(query);
   }
 
-  public User fetchUser(String username, String password) throws SQLException {
-    connectToDatabase();
-    Statement statement = connection.createStatement();
-    String query = "SELECT * FROM user " +
-      "WHERE username='" + username + "' " +
-      "AND password='" + password + "'";
-    ResultSet resultSet = statement.executeQuery(query);
-    User user = null;
-    while (resultSet.next()) {
-      System.out.println(resultSet.getString("username"));
-      System.out.println(resultSet.getString("id"));
-      user = new User(
-        Integer.parseInt(resultSet.getString("id")),
-        resultSet.getString("username")
-      );
-    }
-    disconnectFromDatabase();
-    return user;
-  }
-
   private void connectToDatabase() {
     initializeVariables();
     try {
