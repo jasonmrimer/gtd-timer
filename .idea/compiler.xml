@@ -8,9 +8,11 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="gtd-timer" />
+        <module name="controllers" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="controllers" target="1.8" />
       <module name="gtd-timer" target="1.8" />
     </bytecodeTargetLevel>
   </component>

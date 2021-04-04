@@ -1,4 +1,4 @@
-package edu.louisville.cse640.rimer.gtd_timer;
+package edu.louisville.cse640.rimer.controllers;
 
 import java.sql.*;
 

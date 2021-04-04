@@ -5,9 +5,9 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>edu.louisville.cse640.rimer</groupId>
-  <artifactId>gtd-timer</artifactId>
+  <artifactId>controllers</artifactId>
   <version>1.0-SNAPSHOT</version>
-  <name>gtd-timer</name>
+  <name>controllers</name>
   <packaging>war</packaging>
 
   <properties>
@@ -39,22 +39,7 @@
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
       <version>1.18.18</version>
-      <scope>compile</scope>
     </dependency>
-    <!-- https://mvnrepository.com/artifact/com.ibm.db2.jcc/db2jcc -->
-    <dependency>
-      <groupId>com.ibm.db2.jcc</groupId>
-      <artifactId>db2jcc</artifactId>
-      <version>db2jcc4</version>
-    </dependency>
-    <dependency>
-      <groupId>edu.louisville.cse640.rimer</groupId>
-      <artifactId>controllers</artifactId>
-      <version>1.0-SNAPSHOT</version>
-      <scope>compile</scope>
-    </dependency>
-
-
   </dependencies>
 
   <build>

@@ -1,5 +1,9 @@
 package edu.louisville.cse640.rimer.gtd_timer;
 
+import edu.louisville.cse640.rimer.controllers.ConnectionPool;
+import edu.louisville.cse640.rimer.controllers.User;
+import edu.louisville.cse640.rimer.controllers.UserController;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -8,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.SQLException;
 
 @WebServlet(value = "/Login")
 public class Login extends HttpServlet {
@@ -28,8 +31,8 @@ public class Login extends HttpServlet {
       RequestDispatcher dispatcher;
 
       if (user != null) {
-        req.setAttribute("userId", user.id);
-        req.setAttribute("username", user.username);
+        req.setAttribute("userId", user.getId());
+        req.setAttribute("username", user.getUsername());
         dispatcher = req.getRequestDispatcher("/WEB-INF/timer.jsp");
       } else {
         req.setAttribute("error", "Username or password incorrect");
