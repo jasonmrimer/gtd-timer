@@ -20,16 +20,20 @@
   String username = request.getAttribute("username").toString();
 %>
 <body>
-<h2><%=username%></h2>
-<div>Welcome, more features to come...</div>
-<form action="Timer">
+<% if (eventId.isEmpty()) {%>
+<form action="Timer" method="get">
   <input type="hidden" name="userId" value=<%=userId%>>
   <input type="hidden" name="username" value=<%=username%>>
   <input type="submit" value="Start">
 </form>
+<%}%>
 <% if (!eventId.isEmpty()) {%>
-<div>Timer started with id: <%=eventId%>
-</div>
+<form action="Timer" method="post">
+  <input type="hidden" name="userId" value=<%=userId%>>
+  <input type="hidden" name="username" value=<%=username%>>
+  <input type="hidden" name="eventId" value=<%=eventId%>>
+  <input type="submit" value="Stop">
+</form>
 <%}%>
 </body>
 </html>

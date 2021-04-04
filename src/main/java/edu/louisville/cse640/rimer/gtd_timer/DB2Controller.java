@@ -18,7 +18,7 @@ public class DB2Controller {
     url = "jdbc:db2://db2.cecsresearch.org:50000/COMPANY";
   }
 
-  public String postTimer(String userId) throws SQLException {
+  public String startTimer(String userId) throws SQLException {
     connectToDatabase();
     Statement statement = connection.createStatement();
 
@@ -33,6 +33,16 @@ public class DB2Controller {
       eventId = resultSet.getString("id");
     }
     return eventId;
+  }
+
+  public void endTimer(String eventId) throws SQLException {
+    connectToDatabase();
+    Statement statement = connection.createStatement();
+
+    String query = "update event " +
+      "set END = current_timestamp " +
+      "where id = " + eventId;
+    statement.execute(query);
   }
 
   public User fetchUser(String username, String password) throws SQLException {

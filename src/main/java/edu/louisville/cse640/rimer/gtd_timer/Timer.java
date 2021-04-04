@@ -10,22 +10,50 @@ import java.sql.SQLException;
 
 @WebServlet(value = "/Timer")
 public class Timer extends HttpServlet {
-  @Override
-  protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
-    String userId = req.getParameter("userId");
-    String username = req.getParameter("username");
 
+  private String userId;
+  private String username;
+  private String eventId;
+
+  @Override
+  protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    populateSharedAttributes(req, resp);
     try {
-      String eventId = new DB2Controller().postTimer(userId);
-      req.setAttribute("eventId", eventId);
-      req.setAttribute("userId", userId);
-      req.setAttribute("username", username);
-      req
-        .getRequestDispatcher("/WEB-INF/timer.jsp")
-        .forward(req, resp);
-    } catch (SQLException | ServletException | IOException exception) {
+      eventId = new DB2Controller().startTimer(userId);
+    } catch (SQLException exception) {
       exception.printStackTrace();
     }
+
+    reloadTimerPage(req, resp);
+  }
+
+  @Override
+  protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    populateSharedAttributes(req, resp);
+
+    try {
+      new DB2Controller().endTimer(eventId);
+      eventId = null;
+    } catch (SQLException exception) {
+      exception.printStackTrace();
+    }
+
+    reloadTimerPage(req, resp);
+  }
+
+  private void populateSharedAttributes(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    userId = req.getParameter("userId");
+    username = req.getParameter("username");
+    eventId = req.getParameter("eventId");
+  }
+
+  private void reloadTimerPage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    req.setAttribute("eventId", eventId);
+    req.setAttribute("userId", userId);
+    req.setAttribute("username", username);
+    req
+      .getRequestDispatcher("/WEB-INF/timer.jsp")
+      .forward(req, resp);
   }
 }
 
