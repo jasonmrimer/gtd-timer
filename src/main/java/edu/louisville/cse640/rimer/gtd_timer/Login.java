@@ -33,7 +33,8 @@ public class Login extends HttpServlet {
       if (user != null) {
         req.setAttribute("userId", user.getId());
         req.setAttribute("username", user.getUsername());
-        req.setAttribute("timer", user.getTimerValue());
+        req.setAttribute("timerId", user.getTimerId());
+        req.setAttribute("timerValue", user.getTimerValue());
         dispatcher = req.getRequestDispatcher("/WEB-INF/timer.jsp");
       } else {
         req.setAttribute("error", "Username or password incorrect");

@@ -49,4 +49,20 @@ public class TimerController {
       sqlException.printStackTrace();
     }
   }
+
+  public String editTimer(String timerId, String newTimerValue) {
+    Statement statement;
+
+    try {
+      statement = connection.createStatement();
+
+      String query = "update TIMER " +
+        "set SECONDS = " + newTimerValue +
+        " where id = " + timerId;
+      statement.execute(query);
+    } catch (SQLException sqlException) {
+      sqlException.printStackTrace();
+    }
+    return newTimerValue;
+  }
 }

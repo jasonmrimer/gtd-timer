@@ -11,43 +11,43 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Connection;
 
-@WebServlet(value = "/Timer")
-public class Timer extends HttpServlet {
+@WebServlet(value = "/EditTimer")
+public class EditTimer extends HttpServlet {
   private static Connection connection = null;
 
   private String userId;
   private String username;
   private String eventId;
+  private String timerId;
+  private String newTimerValue;
 
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    populateSharedAttributes(req, resp);
+    extractParameters(req, resp);
+    connect();
+
     if (connection != null) {
       TimerController timerController = new TimerController(connection);
-      eventId = timerController.startTimer(userId);
+      eventId = timerController.editTimer(
+        timerId,
+        newTimerValue
+      );
     } else {
       System.err.println("Connection is null in Timer Servlet");
     }
+
     reloadTimerPage(req, resp);
   }
 
-  @Override
-  protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    populateSharedAttributes(req, resp);
-    TimerController timerController = new TimerController(connection);
-    if (connection != null) {
-      timerController.endTimer(eventId);
-      eventId = null;
-    } else {
-      System.err.println("Connection is null in Timer Servlet");
-    }
-    reloadTimerPage(req, resp);
-  }
-
-  private void populateSharedAttributes(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+  private void extractParameters(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     userId = req.getParameter("userId");
     username = req.getParameter("username");
     eventId = req.getParameter("eventId");
+    timerId = req.getParameter("timerId");
+    newTimerValue = req.getParameter("newTimerValue");
+  }
+
+  private void connect() {
     ConnectionPool connectionPool = ConnectionPool.getInstance("jdbc/COMPANY");
     connection = connectionPool.getConnection();
   }
@@ -56,9 +56,11 @@ public class Timer extends HttpServlet {
     req.setAttribute("eventId", eventId);
     req.setAttribute("userId", userId);
     req.setAttribute("username", username);
+    req.setAttribute("timerId", timerId);
+    req.setAttribute("timerValue", newTimerValue);
+
     req
       .getRequestDispatcher("/WEB-INF/timer.jsp")
       .forward(req, resp);
   }
 }
-
