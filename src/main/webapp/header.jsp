@@ -17,8 +17,8 @@
   href="style.css"
 >
 <%
-  String username = request.getAttribute("username") != null
-    ? request.getAttribute("username").toString()
+  String username = request.getSession().getAttribute("username") != null
+    ? request.getSession().getAttribute("username").toString()
     : "";
 %>
 <html>

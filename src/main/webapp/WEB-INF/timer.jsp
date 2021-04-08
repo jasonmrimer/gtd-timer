@@ -12,11 +12,17 @@
 >
 <html>
 <jsp:include page="../header.jsp"/>
-<%! private String valueOrEmpty(HttpServletRequest request, String attrName) {
-  return request.getAttribute(attrName) == null
-    ? ""
-    : request.getAttribute(attrName).toString();
-}
+<%!
+  private String valueOrEmpty(HttpServletRequest request, String attrName) {
+    String value = "";
+    if (request.getSession().getAttribute(attrName) != null) {
+      return request.getSession().getAttribute(attrName).toString();
+    }
+    if (request.getAttribute(attrName) != null) {
+      return request.getAttribute(attrName).toString();
+    }
+    return value;
+  }
 %>
 <%
   String eventId = valueOrEmpty(request, "eventId");
@@ -28,19 +34,16 @@
 %>
 <body>
 <% if (eventId.isEmpty()) {%>
-<form action="Timer" method="get">
+<form action="Event" method="get">
   <input type="hidden" name="userId" value=<%=userId%>>
-  <input type="hidden" name="username" value=<%=username%>>
   <button class="btn btn-lg button-primary button-start" type="submit">
     <img class="button-icon" src="../icon-play.svg" alt="icon play"/>
     <span class="button-text">START</span>
   </button>
 </form>
-<%}%>
-<% if (!eventId.isEmpty()) {%>
-<form action="Timer" method="post">
+<%} else {%>
+<form action="Event" method="post">
   <input type="hidden" name="userId" value=<%=userId%>>
-  <input type="hidden" name="username" value=<%=username%>>
   <input type="hidden" name="eventId" value=<%=eventId%>>
   <button class="btn btn-lg button-secondary button-stop" type="submit">
     <img class="button-icon" src="../icon-stop.svg" alt="icon stop"/>
@@ -48,9 +51,10 @@
   </button>
 </form>
 <%}%>
+
 <% if (!isEditing) {%>
 <div class="card">
-  <form class="form-edit-timer" action="EditTimer" method="get">
+  <form action="Timer" class="form-edit-timer" method="get">
     <h5 class="title">Time per task</h5>
     <h2>
       <%=timerValue%>
@@ -67,7 +71,7 @@
 </div>
 <%} else {%>
 <div class="card">
-  <form class="form-save-timer" action="EditTimer" method="post">
+  <form action="Timer" class="form-save-timer" method="post">
     <h5 class="title">Time per task</h5>
     <label>
       <input type="text" name="newTimerValue" value=<%=timerValue%>>
@@ -152,6 +156,10 @@
         width: 24px;
         height: 24px;
         margin-right: 8px;
+    }
+
+    .button-stop {
+        border-radius: 8px;
     }
 
     .btn-lg > .button-text {

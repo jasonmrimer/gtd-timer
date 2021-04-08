@@ -8,67 +8,58 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Connection;
 
-@WebServlet(value = "/EditTimer")
-public class EditTimer extends HttpServlet {
+@WebServlet(value = "/Event")
+public class Event extends HttpServlet {
   private static Connection connection = null;
-
-  private String userId;
-  private String username;
   private String eventId;
-  private String timerId;
-  private String newTimerValue;
+  private HttpSession session;
 
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    extractParameters(req, resp);
-    req.setAttribute("isEditing", true);
-    reloadTimerPage(req, resp);
-  }
-
-  @Override
-  protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    extractParameters(req, resp);
-    connect();
-
+    establishConnection(req);
     if (connection != null) {
       TimerController timerController = new TimerController(connection);
-      eventId = timerController.editTimer(
-        timerId,
-        newTimerValue
+      eventId = timerController.startTimer(
+        session.getAttribute("userId").toString()
       );
     } else {
       System.err.println("Connection is null in Timer Servlet");
     }
-
-    req.setAttribute("isEditing", false);
     reloadTimerPage(req, resp);
   }
 
-  private void extractParameters(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    userId = req.getParameter("userId");
-    username = req.getParameter("username");
-    eventId = req.getParameter("eventId");
-    timerId = req.getParameter("timerId");
-    newTimerValue = req.getParameter("newTimerValue");
+  /*
+    the doPost method ends the currently open timer
+   */
+  @Override
+  protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    establishConnection(req);
+    eventId = session.getAttribute("eventId").toString();
+    TimerController timerController = new TimerController(connection);
+    if (connection != null) {
+      timerController.endTimer(eventId);
+      eventId = null;
+    } else {
+      System.err.println("Connection is null in Timer Servlet");
+    }
+    reloadTimerPage(req, resp);
   }
 
-  private void connect() {
+  private void establishConnection(HttpServletRequest req) {
+    session = req.getSession();
     ConnectionPool connectionPool = ConnectionPool.getInstance("jdbc/COMPANY");
     connection = connectionPool.getConnection();
   }
 
   private void reloadTimerPage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    req.setAttribute("eventId", eventId);
-    req.setAttribute("userId", userId);
-    req.setAttribute("username", username);
-    req.setAttribute("timerId", timerId);
-    req.setAttribute("timerValue", newTimerValue);
-
+    session.setAttribute("eventId", eventId);
     req
       .getRequestDispatcher("/WEB-INF/timer.jsp")
       .forward(req, resp);
   }
 }
+

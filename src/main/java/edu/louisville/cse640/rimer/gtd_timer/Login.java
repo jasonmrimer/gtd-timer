@@ -10,19 +10,20 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Connection;
 
 @WebServlet(value = "/Login")
 public class Login extends HttpServlet {
-  private static Connection connection = null;
 
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    HttpSession session = req.getSession();
     String username = req.getParameter("username");
     String password = req.getParameter("password");
     ConnectionPool connectionPool = ConnectionPool.getInstance("jdbc/COMPANY");
-    connection = connectionPool.getConnection();
+    Connection connection = connectionPool.getConnection();
 
     UserController userController = new UserController(connection);
     User user = userController.fetchUser(username, password);
@@ -31,10 +32,7 @@ public class Login extends HttpServlet {
       RequestDispatcher dispatcher;
 
       if (user != null) {
-        req.setAttribute("userId", user.getId());
-        req.setAttribute("username", user.getUsername());
-        req.setAttribute("timerId", user.getTimerId());
-        req.setAttribute("timerValue", user.getTimerValue());
+        hydrateSession(session, user);
         dispatcher = req.getRequestDispatcher("/WEB-INF/timer.jsp");
       } else {
         req.setAttribute("error", "Username or password incorrect");
@@ -45,5 +43,12 @@ public class Login extends HttpServlet {
     } else {
       System.err.println("Connection is null");
     }
+  }
+
+  private void hydrateSession(HttpSession session, User user) {
+    session.setAttribute("userId", user.getId());
+    session.setAttribute("username", user.getUsername());
+    session.setAttribute("timerId", user.getTimerId());
+    session.setAttribute("timerValue", user.getTimerValue());
   }
 }
