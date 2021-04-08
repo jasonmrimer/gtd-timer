@@ -13,9 +13,9 @@
 <html>
 <jsp:include page="../header.jsp"/>
 <%! private String valueOrEmpty(HttpServletRequest request, String attrName) {
-  return request.getAttribute(attrName) == null
+  return request.getSession().getAttribute(attrName) == null
     ? ""
-    : request.getAttribute(attrName).toString();
+    : request.getSession().getAttribute(attrName).toString();
 }
 %>
 <%
