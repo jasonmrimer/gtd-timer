@@ -24,6 +24,13 @@ public class EditTimer extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     extractParameters(req, resp);
+    req.setAttribute("isEditing", true);
+    reloadTimerPage(req, resp);
+  }
+
+  @Override
+  protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    extractParameters(req, resp);
     connect();
 
     if (connection != null) {
@@ -36,6 +43,7 @@ public class EditTimer extends HttpServlet {
       System.err.println("Connection is null in Timer Servlet");
     }
 
+    req.setAttribute("isEditing", false);
     reloadTimerPage(req, resp);
   }
 
