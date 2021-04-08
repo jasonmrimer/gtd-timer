@@ -55,7 +55,7 @@
     <h2>
       <%=timerValue%>
     </h2>
-    <h6 class="non-header">minutes</h6>
+    <h6 class="non-header">seconds</h6>
     <input type="hidden" name="userId" value=<%=userId%>>
     <input type="hidden" name="username" value=<%=username%>>
     <input type="hidden" name="timerId" value=<%=timerId%>>
@@ -72,7 +72,7 @@
     <label>
       <input type="text" name="newTimerValue" value=<%=timerValue%>>
     </label>
-    <h6 class="non-header">^in seconds</h6>
+    <h6 class="non-header">seconds</h6>
     <input type="hidden" name="userId" value=<%=userId%>>
     <input type="hidden" name="username" value=<%=username%>>
     <input type="hidden" name="timerId" value=<%=timerId%>>
