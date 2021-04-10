@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Connection;
 
@@ -48,10 +49,11 @@ public class Timer extends HttpServlet {
   }
 
   private void extractParameters(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    userId = req.getParameter("userId");
-    username = req.getParameter("username");
-    eventId = req.getParameter("eventId");
-    timerId = req.getParameter("timerId");
+    HttpSession session = req.getSession();
+    userId = session.getAttribute("userId").toString();
+    username = session.getAttribute("username").toString();
+    timerId = session.getAttribute("timerId").toString();
+    eventId = req.getAttribute("eventId").toString();
     newTimerValue = req.getParameter("newTimerValue");
   }
 
