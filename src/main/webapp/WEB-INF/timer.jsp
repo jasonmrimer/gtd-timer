@@ -158,6 +158,10 @@
         margin-right: 8px;
     }
 
+    .button-stop {
+        border-radius: 8px;
+    }
+
     .btn-lg > .button-text {
         vertical-align: center;
         font-family: Roboto, sans-serif;
