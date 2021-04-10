@@ -15,7 +15,7 @@ import java.sql.Connection;
 @WebServlet(value = "/Timer")
 public class Timer extends HttpServlet {
   private static Connection connection = null;
-
+  private HttpSession session;
   private String userId;
   private String username;
   private String eventId;
@@ -25,7 +25,7 @@ public class Timer extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     extractParameters(req, resp);
-    req.setAttribute("isEditing", true);
+    session.setAttribute("isEditing", true);
     reloadTimerPage(req, resp);
   }
 
@@ -44,16 +44,14 @@ public class Timer extends HttpServlet {
       System.err.println("Connection is null in Timer Servlet");
     }
 
-    req.setAttribute("isEditing", false);
+    session.setAttribute("isEditing", false);
     reloadTimerPage(req, resp);
   }
 
   private void extractParameters(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    HttpSession session = req.getSession();
+    session = req.getSession();
     userId = session.getAttribute("userId").toString();
-    username = session.getAttribute("username").toString();
     timerId = session.getAttribute("timerId").toString();
-    eventId = req.getAttribute("eventId").toString();
     newTimerValue = req.getParameter("newTimerValue");
   }
 
@@ -63,11 +61,7 @@ public class Timer extends HttpServlet {
   }
 
   private void reloadTimerPage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    req.setAttribute("eventId", eventId);
-    req.setAttribute("userId", userId);
-    req.setAttribute("username", username);
-    req.setAttribute("timerId", timerId);
-    req.setAttribute("timerValue", newTimerValue);
+    session.setAttribute("timerValue", newTimerValue);
 
     req
       .getRequestDispatcher("/WEB-INF/timer.jsp")
