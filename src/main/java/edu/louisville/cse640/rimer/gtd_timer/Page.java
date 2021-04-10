@@ -11,14 +11,14 @@ import java.io.IOException;
 public class Page extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    req.getSession().setAttribute("currentPage", "timer");
-    req.getRequestDispatcher("/WEB-INF/timer.jsp").forward(req, resp);
+    req.getSession().setAttribute("currentPage", "history");
+    req.getRequestDispatcher("/History").include(req, resp);
+    req.getRequestDispatcher("/WEB-INF/history.jsp").forward(req, resp);
   }
 
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    req.getSession().setAttribute("currentPage", "history");
-    req.getRequestDispatcher("/History").include(req, resp);
-    req.getRequestDispatcher("/WEB-INF/history.jsp").forward(req, resp);
+    req.getSession().setAttribute("currentPage", "timer");
+    req.getRequestDispatcher("/WEB-INF/timer.jsp").forward(req, resp);
   }
 }

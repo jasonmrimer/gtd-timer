@@ -19,7 +19,6 @@
 <%!
   private String classNameForCurrentPage(String page, HttpServletRequest req) {
     String currentPage = req.getSession().getAttribute("currentPage").toString();
-    System.out.println("=========" + currentPage);
     String className = "page";
     if (currentPage.equalsIgnoreCase(page)) {
       className = "page page-current";
@@ -43,7 +42,7 @@
   <div class="menu-options">
     <form
       action="Page"
-      method="get"
+      method="post"
       class="page-form"
     >
       <input
@@ -54,7 +53,7 @@
     </form>
     <form
       action="Page"
-      method="post"
+      method="get"
       class="page-form"
     >
       <input
