@@ -41,12 +41,28 @@
   <h6 class="title-app">GTD Timer</h6>
   <%if (request.getSession().getAttribute("currentPage") != null) {%>
   <div class="menu-options">
-    <div class="page-left <%=classNameForCurrentPage("timer", request)%>">
-      Timer
-    </div>
-    <div class="page-right <%=classNameForCurrentPage("analytics", request)%>">
-      Analytics
-    </div>
+    <form
+      action="Page"
+      method="get"
+      class="page-form"
+    >
+      <input
+        type="submit"
+        value="Timer"
+        class="page-left <%=classNameForCurrentPage("timer", request)%>"
+      />
+    </form>
+    <form
+      action="Page"
+      method="post"
+      class="page-form"
+    >
+      <input
+        type="submit"
+        value="Analytics"
+      class="page-right <%=classNameForCurrentPage("analytics", request)%>"
+      />
+    </form>
   </div>
   <%}%>
   <%if (!username.isEmpty()) {%>
@@ -95,9 +111,21 @@
     padding-bottom: 2px;
   }
 
+  .page-form {
+    margin: 0;
+    height: 100%;
+  }
+
   .page {
     display: flex;
     align-items: center;
+    height: 100%;
+
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    border-bottom: 2px solid #6200EE;
+    background: none;
 
     font-family: Roboto, sans-serif;
     font-style: normal;
@@ -110,7 +138,10 @@
     text-transform: uppercase;
 
     color: #FFFFFF;
-    border-bottom: 2px solid #6200EE;
+  }
+
+  .page:hover {
+    cursor: pointer;
   }
 
   .page-left {
