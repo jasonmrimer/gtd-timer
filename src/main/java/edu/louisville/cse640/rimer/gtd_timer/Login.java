@@ -46,6 +46,7 @@ public class Login extends HttpServlet {
   }
 
   private void hydrateSession(HttpSession session, User user) {
+    session.setAttribute("currentPage", "timer");
     session.setAttribute("userId", user.getId());
     session.setAttribute("username", user.getUsername());
     session.setAttribute("timerId", user.getTimerId());

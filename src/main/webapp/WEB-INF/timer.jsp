@@ -37,7 +37,7 @@
 <form action="Event" method="get">
   <input type="hidden" name="userId" value=<%=userId%>>
   <button class="btn btn-lg button-primary button-start" type="submit">
-    <img class="button-icon" src="../icon-play.svg" alt="icon play"/>
+    <img class="button-icon" src="./icon-play.svg" alt="icon play"/>
     <span class="button-text">START</span>
   </button>
 </form>
@@ -46,7 +46,7 @@
   <input type="hidden" name="userId" value=<%=userId%>>
   <input type="hidden" name="eventId" value=<%=eventId%>>
   <button class="btn btn-lg button-secondary button-stop" type="submit">
-    <img class="button-icon" src="../icon-stop.svg" alt="icon stop"/>
+    <img class="button-icon" src="./icon-stop.svg" alt="icon stop"/>
     <span class="button-text">STOP</span>
   </button>
 </form>
@@ -64,7 +64,7 @@
     <input type="hidden" name="username" value=<%=username%>>
     <input type="hidden" name="timerId" value=<%=timerId%>>
     <button class="btn button-small button-secondary button-edit" type="submit">
-      <img class="button-icon" src="../icon-edit.svg" alt="icon edit"/>
+      <img class="button-icon" src="./icon-edit.svg" alt="icon edit"/>
       <span class="button-text">EDIT</span>
     </button>
   </form>
@@ -81,7 +81,7 @@
     <input type="hidden" name="username" value=<%=username%>>
     <input type="hidden" name="timerId" value=<%=timerId%>>
     <button class="btn button-small button-primary button-save" type="submit">
-      <img class="button-icon" src="../icon-save.svg" alt="icon save"/>
+      <img class="button-icon" src="./icon-save.svg" alt="icon save"/>
       <span class="button-text">SAVE</span>
     </button>
   </form>
