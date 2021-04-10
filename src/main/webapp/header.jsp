@@ -59,8 +59,8 @@
     >
       <input
         type="submit"
-        value="Analytics"
-      class="page-right <%=classNameForCurrentPage("analytics", request)%>"
+        value="History"
+      class="page-right <%=classNameForCurrentPage("history", request)%>"
       />
     </form>
   </div>
