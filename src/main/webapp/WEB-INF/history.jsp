@@ -16,9 +16,14 @@
 
   String elapsedOverUnder(EventModel event) {
     if (event.getElapsed() > 0) {
-      return "+ " + event.getElapsed();
+      return "+ " + event.getElapsed() + " sec";
     }
-    return "- " + Math.abs(event.getElapsed());
+
+    if (event.getElapsed() < -600000000) {
+      return "—";
+    }
+
+    return "- " + Math.abs(event.getElapsed()) + " sec";
   }
 %>
 <%
@@ -26,19 +31,84 @@
   dateTimeFormatter = DateTimeFormatter.ofPattern("MMM dd, yyyy");
 %>
 <body>
-<table>
-  <tr>
-    <th scope="col">Date</th>
-    <th scope="col">Goal</th>
-    <th scope="col">Elapsed Time</th>
-  </tr>
-<% for (EventModel event : events) {%>
-<tr>
-  <td><%=dateTimeFormatter.format(event.getDateTime())%></td>
-  <td><%=event.getGoal()%> sec</td>
-  <td><%=elapsedOverUnder(event)%> sec</td>
-</tr>
-<% }%>
-</table>
+<div class="table-container">
+  <div class="table-headings">
+    <span class="table-heading column-1">Date</span>
+    <span class="table-heading column-2">Goal</span>
+    <span class="table-heading column-3">Elapsed Time</span>
+  </div>
+  <% for (EventModel event : events) {%>
+  <div class="table-row">
+    <span class="cell column-1"><%=dateTimeFormatter.format(event.getDateTime())%></span>
+    <span class="cell column-2"><%=event.getGoal()%> sec</span>
+    <span class="cell column-3"><%=elapsedOverUnder(event)%></span>
+  </div>
+  <% }%>
+</div>
 </body>
 </html>
+<style type="text/css">
+  .table-container {
+    margin-top: 32px;
+  }
+
+  .table-headings, .table-row {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .column-1 {
+    width: 104px;
+  }
+
+  .column-2 {
+    width: 72px;
+  }
+
+  .column-3 {
+    width: 96px;
+  }
+
+  .table-heading, .cell {
+    display: flex;
+    justify-content: flex-end;
+    margin: 0 8px;
+  }
+
+  .table-row {
+    display: flex;
+    align-items: center;
+    height: 40px;
+    margin-bottom: 24px;
+  }
+
+  .table-heading {
+    font-family: Roboto, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 24px;
+    display: flex;
+    align-items: center;
+    text-align: right;
+    letter-spacing: 0.1px;
+    color: #000000;
+  }
+
+  td {
+    text-align: right;
+  }
+
+  .cell {
+    font-family: Roboto, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 16px;
+    display: flex;
+    align-items: center;
+    text-align: right;
+    letter-spacing: 0.4px;
+    color: #000000;
+  }
+</style>
