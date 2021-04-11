@@ -26,14 +26,15 @@ public class HistoryController {
       String query = "select * from EVENT " +
         " where USER_ID = " + userId;
       ResultSet resultSet = statement.executeQuery(query);
-      DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
 
       while (resultSet.next()) {
+        int id = Integer.parseInt(resultSet.getString("id"));
         LocalDateTime start = parseDate(resultSet, "start");
         LocalDateTime end = parseDate(resultSet, "end");
         int goal = Integer.parseInt(resultSet.getString("timer_seconds"));
         int elapsed = Math.toIntExact(start.until(end, ChronoUnit.SECONDS));
         events.add(new EventModel(
+          id,
           start,
           goal,
           elapsed
@@ -44,6 +45,21 @@ public class HistoryController {
     }
 
     return events;
+  }
+
+  public void deleteEvent(String eventId) {
+    Statement statement = null;
+
+    try {
+      statement = connection.createStatement();
+
+      String query = "delete from EVENT " +
+        " where ID = " + eventId;
+
+      statement.execute(query);
+    } catch (SQLException sqlException) {
+      sqlException.printStackTrace();
+    }
   }
 
   LocalDateTime parseDate(ResultSet resultSet, String name) throws SQLException {

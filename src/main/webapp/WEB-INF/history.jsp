@@ -42,6 +42,12 @@
     <span class="cell column-1"><%=dateTimeFormatter.format(event.getDateTime())%></span>
     <span class="cell column-2"><%=event.getGoal()%> sec</span>
     <span class="cell column-3"><%=elapsedOverUnder(event)%></span>
+    <form action="History" method="post">
+      <input type="hidden" name="eventId" value=<%=event.getId()%>>
+      <button class="btn-lg" type="submit">
+        <span>Delete</span>
+      </button>
+    </form>
   </div>
   <% }%>
 </div>

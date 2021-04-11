@@ -17,11 +17,28 @@ import java.util.ArrayList;
 public class History extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    ConnectionPool connectionPool = ConnectionPool.getInstance("jdbc/COMPANY");
-    Connection connection = connectionPool.getConnection();
-    HistoryController historyController = new HistoryController(connection);
+    HistoryController historyController = getHistoryController();
+    sendEvents(req, historyController);
+  }
+
+  private void sendEvents(HttpServletRequest req, HistoryController historyController) {
     String userId = req.getSession().getAttribute("userId").toString();
     ArrayList<EventModel> events = historyController.fetchEventsForUser(userId);
     req.setAttribute("events", events);
+  }
+
+  @Override
+  protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    HistoryController historyController = getHistoryController();
+    String eventId = req.getParameter("eventId");
+    historyController.deleteEvent(eventId);
+    sendEvents(req, historyController);
+    req.getRequestDispatcher("WEB-INF/history.jsp").forward(req, resp);
+  }
+
+  private HistoryController getHistoryController() {
+    ConnectionPool connectionPool = ConnectionPool.getInstance("jdbc/COMPANY");
+    Connection connection = connectionPool.getConnection();
+    return new HistoryController(connection);
   }
 }

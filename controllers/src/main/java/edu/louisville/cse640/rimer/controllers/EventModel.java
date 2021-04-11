@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 public class EventModel {
+  int id;
   LocalDateTime dateTime;
   int goal;
   int elapsed;
