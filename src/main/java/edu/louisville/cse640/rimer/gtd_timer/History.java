@@ -17,13 +17,11 @@ import java.util.ArrayList;
 public class History extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    System.out.println("+==============here");
     ConnectionPool connectionPool = ConnectionPool.getInstance("jdbc/COMPANY");
     Connection connection = connectionPool.getConnection();
     HistoryController historyController = new HistoryController(connection);
     String userId = req.getSession().getAttribute("userId").toString();
     ArrayList<EventModel> events = historyController.fetchEventsForUser(userId);
-    System.out.println("---------" + events.size());
     req.setAttribute("events", events);
   }
 }
