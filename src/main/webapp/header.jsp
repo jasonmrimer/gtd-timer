@@ -67,7 +67,7 @@
   <%if (!username.isEmpty()) {%>
   <div class="container-profile">
     <span class="username"><%=username%></span>
-    <img class=icon-user" src="icon-user.svg" alt="user profile icon"/>
+    <img class=icon-user" src="./icon-user.svg" alt="user profile icon"/>
   </div>
   <%}%>
 </div>

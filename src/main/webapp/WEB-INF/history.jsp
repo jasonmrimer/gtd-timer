@@ -42,10 +42,11 @@
     <span class="cell column-1"><%=dateTimeFormatter.format(event.getDateTime())%></span>
     <span class="cell column-2"><%=event.getGoal()%> sec</span>
     <span class="cell column-3"><%=elapsedOverUnder(event)%></span>
-    <form action="History" method="post">
+    <form class="form-delete" action="History" method="post">
       <input type="hidden" name="eventId" value=<%=event.getId()%>>
-      <button class="btn-lg" type="submit">
-        <span>Delete</span>
+      <button class="btn-lg button-secondary button-delete" type="submit">
+        <img class="button-icon" src="../icon-delete.svg" alt="icon delete"/>
+        <span class="button-text">Delete</span>
       </button>
     </form>
   </div>
@@ -54,6 +55,12 @@
 </body>
 </html>
 <style type="text/css">
+
+  .form-delete {
+    margin-left: 16px;
+    margin-bottom: 0;
+  }
+
   .table-container {
     margin-top: 32px;
   }
@@ -116,5 +123,50 @@
     text-align: right;
     letter-spacing: 0.4px;
     color: #000000;
+  }
+
+  .button-secondary {
+    border: none;
+    padding: 4px 8px;
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+    width: 104px;
+    height: 32px;
+    background: #FAFAFA;
+    border-radius: 4px;
+    filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.14)) drop-shadow(0 2px 1px rgba(0, 0, 0, 0.12)) drop-shadow(0px 1px 3px rgba(0, 0, 0, 0.2));
+  }
+
+  .button-secondary > .button-text {
+    font-family: Roboto, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    letter-spacing: 1.25px;
+    text-transform: uppercase;
+    color: #B00020;
+    margin-left: 2px;
+  }
+
+  .button-secondary > .button-icon {
+    height: 24px;
+    width: 24px;
+    filter: invert(11%) sepia(86%) saturate(5355%) hue-rotate(342deg) brightness(76%) contrast(107%);
+  }
+
+  .button-secondary:hover {
+    cursor: pointer;
+    background: #B00020;
+  }
+
+  .button-secondary:hover > .button-text {
+    color: #FFFFFF;
+    fill: #FFFFFF;
+  }
+
+  .button-secondary:hover > .button-icon {
+    filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(249deg) brightness(103%) contrast(103%);
   }
 </style>
