@@ -14,7 +14,7 @@ public class TimerController {
 
   public String startTimer(String userId) {
     String eventId = "";
-    Statement statement = null;
+    Statement statement;
 
     try {
       statement = connection.createStatement();
@@ -50,7 +50,7 @@ public class TimerController {
     }
   }
 
-  public String editTimer(String timerId, String newTimerValue) {
+  public void editTimer(String timerId, String newTimerValue) {
     Statement statement;
 
     try {
@@ -63,6 +63,5 @@ public class TimerController {
     } catch (SQLException sqlException) {
       sqlException.printStackTrace();
     }
-    return newTimerValue;
   }
 }

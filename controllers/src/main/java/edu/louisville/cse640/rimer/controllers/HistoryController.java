@@ -17,7 +17,7 @@ public class HistoryController {
   }
 
   public ArrayList<EventModel> fetchEventsForUser(String userId) {
-    Statement statement = null;
+    Statement statement;
     ArrayList<EventModel> events = new ArrayList<>();
 
     try {
@@ -33,33 +33,13 @@ public class HistoryController {
         LocalDateTime end = parseDate(resultSet, "end");
         int goal = Integer.parseInt(resultSet.getString("timer_seconds"));
         int elapsed = Math.toIntExact(start.until(end, ChronoUnit.SECONDS));
-        events.add(new EventModel(
-          id,
-          start,
-          goal,
-          elapsed
-        ));
+        events.add(new EventModel(id, start, goal, elapsed));
       }
     } catch (SQLException sqlException) {
       sqlException.printStackTrace();
     }
 
     return events;
-  }
-
-  public void deleteEvent(String eventId) {
-    Statement statement = null;
-
-    try {
-      statement = connection.createStatement();
-
-      String query = "delete from EVENT " +
-        " where ID = " + eventId;
-
-      statement.execute(query);
-    } catch (SQLException sqlException) {
-      sqlException.printStackTrace();
-    }
   }
 
   LocalDateTime parseDate(ResultSet resultSet, String name) throws SQLException {
@@ -79,5 +59,20 @@ public class HistoryController {
         fixedLengthString,
         dateTimeFormatter
       );
+  }
+
+  public void deleteEvent(String eventId) {
+    Statement statement = null;
+
+    try {
+      statement = connection.createStatement();
+
+      String query = "delete from EVENT " +
+        " where ID = " + eventId;
+
+      statement.execute(query);
+    } catch (SQLException sqlException) {
+      sqlException.printStackTrace();
+    }
   }
 }

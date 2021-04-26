@@ -16,27 +16,24 @@ import java.sql.Connection;
 public class Timer extends HttpServlet {
   private static Connection connection = null;
   private HttpSession session;
-  private String userId;
-  private String username;
-  private String eventId;
   private String timerId;
   private String newTimerValue;
 
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    extractParameters(req, resp);
+    extractParameters(req);
     session.setAttribute("isEditing", true);
     reloadTimerPage(req, resp);
   }
 
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    extractParameters(req, resp);
+    extractParameters(req);
     connect();
 
     if (connection != null) {
       TimerController timerController = new TimerController(connection);
-      eventId = timerController.editTimer(
+      timerController.editTimer(
         timerId,
         newTimerValue
       );
@@ -48,9 +45,8 @@ public class Timer extends HttpServlet {
     reloadTimerPage(req, resp);
   }
 
-  private void extractParameters(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+  private void extractParameters(HttpServletRequest req) {
     session = req.getSession();
-    userId = session.getAttribute("userId").toString();
     timerId = session.getAttribute("timerId").toString();
     newTimerValue = req.getParameter("newTimerValue");
   }
@@ -62,7 +58,6 @@ public class Timer extends HttpServlet {
 
   private void reloadTimerPage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     session.setAttribute("timerValue", newTimerValue);
-
     req
       .getRequestDispatcher("/WEB-INF/timer.jsp")
       .forward(req, resp);

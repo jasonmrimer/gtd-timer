@@ -11,6 +11,13 @@
 <html>
 <jsp:include page="../header.jsp"/>
 <%!
+  private String goodOrBad(EventModel event) {
+    if (event.getElapsed() > 0 || event.getElapsed() < -600000000) {
+      return "cell-bad";
+    }
+    return "cell-good";
+  }
+
   ArrayList<EventModel> events;
   DateTimeFormatter dateTimeFormatter;
 
@@ -41,7 +48,7 @@
   <div class="table-row">
     <span class="cell column-1"><%=dateTimeFormatter.format(event.getDateTime())%></span>
     <span class="cell column-2"><%=event.getGoal()%> sec</span>
-    <span class="cell column-3"><%=elapsedOverUnder(event)%></span>
+    <span class="cell column-3 <%=goodOrBad(event)%>"><%=elapsedOverUnder(event)%></span>
     <form class="form-delete" action="History" method="post">
       <input type="hidden" name="eventId" value=<%=event.getId()%>>
       <button class="btn-lg button-secondary button-delete" type="submit">
@@ -68,6 +75,14 @@
   .table-headings, .table-row {
     display: flex;
     flex-direction: row;
+  }
+
+  .cell-bad {
+    color: #B00020;
+  }
+
+  .cell-good {
+    color: #00740C;
   }
 
   .column-1 {

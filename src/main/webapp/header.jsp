@@ -40,26 +40,18 @@
   <h6 class="title-app">GTD Timer</h6>
   <%if (request.getSession().getAttribute("currentPage") != null) {%>
   <div class="menu-options">
-    <form
-      action="Page"
-      method="post"
-      class="page-form"
-    >
+    <form action="Page" method="post" class="page-form">
       <input
         type="submit"
         value="Timer"
         class="page-left <%=classNameForCurrentPage("timer", request)%>"
       />
     </form>
-    <form
-      action="Page"
-      method="get"
-      class="page-form"
-    >
+    <form action="Page" method="get" class="page-form">
       <input
         type="submit"
         value="History"
-      class="page-right <%=classNameForCurrentPage("history", request)%>"
+        class="page-right <%=classNameForCurrentPage("history", request)%>"
       />
     </form>
   </div>

@@ -18,6 +18,10 @@ public class Event extends HttpServlet {
   private String eventId;
   private HttpSession session;
 
+  /*
+    the doPost method ends the currently open timer
+   */
+
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     establishConnection(req);
@@ -32,9 +36,6 @@ public class Event extends HttpServlet {
     reloadTimerPage(req, resp);
   }
 
-  /*
-    the doPost method ends the currently open timer
-   */
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     establishConnection(req);
